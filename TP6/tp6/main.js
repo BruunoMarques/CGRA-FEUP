@@ -20,6 +20,7 @@ serialInclude([
 	'MyEdge.js',
 	'MyDroneLegs.js',
 	'MySemiCylinder.js',
+	'MyRotor.js',
 	 
 
 	main=function() {

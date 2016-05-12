@@ -8,6 +8,7 @@
 	this.edge = new MyCylinder(this.scene);
 	this.sphere = new MySemiSphere(this.scene, 24,16);
 	this.legs = new MyDroneLegs(this.scene);
+	this.rotors = new MyRotor(this.scene);
 	
  	this.Rot = 0;
  	this.Height = 0;
@@ -49,6 +50,25 @@
 		this.legs.display();
 	this.scene.popMatrix();
 
+	this.scene.pushMatrix();
+		this.scene.translate(1.5,0.15,0);
+		this.rotors.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+		this.scene.translate(-1.5,0.15,0);
+		this.rotors.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+		this.scene.translate(0,0.15,1.5);
+		this.rotors.display();
+	this.scene.popMatrix();
+
+		this.scene.pushMatrix();
+		this.scene.translate(0,0.15,-1.5);
+		this.rotors.display();
+	this.scene.popMatrix();
 
 		
 

@@ -23,6 +23,8 @@ LightingScene.prototype.init = function(application) {
 	this.ClockOn = true;
 	this.speed = 3;
 
+	this.droneAppearanceList = [ 'Yellow' , 'Blue' , 'Green' ];
+
 	CGFscene.prototype.init.call(this, application);
 
 	this.initCameras();
@@ -51,6 +53,7 @@ LightingScene.prototype.init = function(application) {
 	this.sphere = new MySemiSphere(this,12,8);
 	this.edge = new MyEdge(this);
 	this.leg = new MyDroneLegs(this);
+	this.rotor = new MyRotor(this);
 	
 	this.boardA = new Plane(this, BOARD_A_DIVISIONS,-0.2, 1.3, 0.1, 0.8);
 	this.boardB = new Plane(this, BOARD_B_DIVISIONS, 0, 1, 0, 1);
@@ -321,7 +324,6 @@ LightingScene.prototype.display = function() {
 		this.rotate(this.drone.Rot *degToRad +Math.PI,0,1,0);
 		this.drone.display();
 	this.popMatrix();	
-
 
 	// ---- END Primitive drawing section
 };
