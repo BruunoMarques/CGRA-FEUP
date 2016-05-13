@@ -14,6 +14,8 @@
  	this.Height = 0;
  	this.MotionX = 0;
  	this.MotionZ = 0;
+ 	this.spin = 0;
+	this.lastTime = 0;
 
 
  	this.initBuffers();
@@ -50,23 +52,30 @@
 		this.legs.display();
 	this.scene.popMatrix();
 
+
+//rotors
 	this.scene.pushMatrix();
 		this.scene.translate(1.5,0.15,0);
+		this.scene.rotate(-this.spin,0,1,0);
 		this.rotors.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
 		this.scene.translate(-1.5,0.15,0);
+		this.scene.rotate(-this.spin,0,1,0);
+		this.rotors.display();
+	this.scene.popMatrix();
+
+/////Oposites
+	this.scene.pushMatrix();
+		this.scene.translate(0,0.15,1.5);
+		this.scene.rotate(this.spin,0,1,0);
 		this.rotors.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
-		this.scene.translate(0,0.15,1.5);
-		this.rotors.display();
-	this.scene.popMatrix();
-
-		this.scene.pushMatrix();
 		this.scene.translate(0,0.15,-1.5);
+		this.scene.rotate(this.spin,0,1,0);
 		this.rotors.display();
 	this.scene.popMatrix();
 
@@ -74,6 +83,23 @@
 
  };
 
+ MyDrone.prototype.update = function(currTime){
+ //	console.log(this.spin*degToRad);
+
+ 	if (this.lastTime == 0) {
+	this.lastTime = currTime;	
+	}
+
+	else {
+		var diff = currTime - this.lastTime;
+		this.spin += (Math.PI*2) * (diff/1000);
+		console.log(diff);
+		this.lastTime = currTime;	
+
+	}
+
+
+ };
 
  MyDrone.prototype.initBuffers = function() {
  	this.vertices = [];
@@ -109,7 +135,6 @@
 		this.MotionX += Math.sin(this.Rot *degToRad) *(speed*0.1); 
 		this.MotionZ += Math.cos(this.Rot*degToRad)*(speed*0.1); 
 	};
-
 
  	this.initGLBuffers();
  };

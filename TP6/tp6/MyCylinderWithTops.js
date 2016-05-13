@@ -45,6 +45,7 @@
  MyCylinderWithTops.prototype.constructor = MyCylinderWithTops;
 
  MyCylinderWithTops.prototype.update = function(currTime){
+ 	
  	var secInc = 0;
  
 	if (this.lastTime == 0) {

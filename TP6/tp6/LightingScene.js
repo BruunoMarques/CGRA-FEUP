@@ -21,6 +21,7 @@ LightingScene.prototype.init = function(application) {
 	this.Luz3 = true;
 	this.Luz4 = true;
 	this.ClockOn = true;
+	this.rotorOn = true;
 	this.speed = 3;
 
 	this.droneAppearanceList = [ 'Yellow' , 'Blue' , 'Green' ];
@@ -101,7 +102,7 @@ LightingScene.prototype.init = function(application) {
 	this.boardAppearance.setShininess(80);
 
 
-	this.setUpdatePeriod(100);
+	this.setUpdatePeriod(10);
 
 
 };
@@ -112,6 +113,9 @@ LightingScene.prototype.initCameras = function() {
 
 LightingScene.prototype.update = function (currTime){
 	
+	if (this.rotorOn){
+		this.drone.update(currTime);
+	}
 
 	if (this.Luz1)
 		this.lights[0].enable();
