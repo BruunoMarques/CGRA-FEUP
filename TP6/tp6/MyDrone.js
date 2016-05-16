@@ -14,8 +14,13 @@
  	this.Height = 0;
  	this.MotionX = 0;
  	this.MotionZ = 0;
- 	this.spin = 0;
+ 	this.spinF = 0;
+ 	this.spinB = 0;
+ 	this.spinR = 0;
+ 	this.spinL = 0;
 	this.lastTime = 0;
+	this.RotSpeed = 0;
+	this.Acc = 0;
 
 
  	this.initBuffers();
@@ -56,26 +61,26 @@
 //rotors
 	this.scene.pushMatrix();
 		this.scene.translate(1.5,0.15,0);
-		this.scene.rotate(-this.spin,0,1,0);
+		this.scene.rotate(-this.spinL,0,1,0);
 		this.rotors.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
 		this.scene.translate(-1.5,0.15,0);
-		this.scene.rotate(-this.spin,0,1,0);
+		this.scene.rotate(-this.spinR,0,1,0);
 		this.rotors.display();
 	this.scene.popMatrix();
 
 /////Oposites
 	this.scene.pushMatrix();
 		this.scene.translate(0,0.15,1.5);
-		this.scene.rotate(this.spin,0,1,0);
+		this.scene.rotate(this.spinF,0,1,0);
 		this.rotors.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
 		this.scene.translate(0,0.15,-1.5);
-		this.scene.rotate(this.spin,0,1,0);
+		this.scene.rotate(this.spinB,0,1,0);
 		this.rotors.display();
 	this.scene.popMatrix();
 
@@ -84,21 +89,52 @@
  };
 
  MyDrone.prototype.update = function(currTime){
- //	console.log(this.spin*degToRad);
+
+	var diff = currTime - this.lastTime;
+
 
  	if (this.lastTime == 0) {
-	this.lastTime = currTime;	
+	this.lastTime = currTime;
 	}
+	
+	else if (this.RotSpeed == 0){
 
-	else {
-		var diff = currTime - this.lastTime;
-		this.spin += (Math.PI*2) * (diff/1000);
-		console.log(diff);
+		diff = currTime - this.lastTime;
+		this.spinL += (Math.PI*2) *(diff/1000);
+		this.spinF += (Math.PI*2)*(diff/1000);
+		this.spinR += (Math.PI*2) *(diff/1000);
+		this.spinB += (Math.PI*2) *(diff/1000);
 		this.lastTime = currTime;	
-
 	}
-
-
+	else if (this.RotSpeed == 1){
+		diff = currTime - this.lastTime;
+		this.spinL += ((Math.PI*2)*10) *(diff/1000);
+		this.spinF += (72*degToRad)*(diff/1000);
+		this.spinR += ((Math.PI*2)*10) *(diff/1000);
+		this.spinB += (72*degToRad)*(diff/1000);
+		this.lastTime = currTime;
+		this.Acc += diff;	
+	}
+	else if (this.RotSpeed == 2){
+		diff = currTime - this.lastTime;
+		this.spinL += (Math.PI*2)  *(diff/1000);
+		this.spinF += (72*degToRad)*(diff/1000);
+		this.spinR += (Math.PI*2)  *(diff/1000);
+		this.spinB += ((Math.PI*2)*10)*(diff/1000);
+		this.lastTime = currTime;
+		this.Acc += diff;	
+	} 
+	else if () 200){
+		this.RotSpeed = 0;
+	}
+	
+	
+/*	else if (this.Acc >= 1){
+		this.RotSpeed == 0;
+		console.log(this.Acc);
+	}
+	
+*/
  };
 
  MyDrone.prototype.initBuffers = function() {
@@ -135,6 +171,13 @@
 		this.MotionX += Math.sin(this.Rot *degToRad) *(speed*0.1); 
 		this.MotionZ += Math.cos(this.Rot*degToRad)*(speed*0.1); 
 	};
+	
+	this.yaw = function (){
+		this.RotSpeed = 1;
+	};
 
+	this.pitch = function (){
+		this.RotSpeed = 2;
+	};
  	this.initGLBuffers();
  };

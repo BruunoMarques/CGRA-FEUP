@@ -61,19 +61,22 @@ MyInterface.prototype.init = function(application) {
  * @param event {Event}
  */
 MyInterface.prototype.processKeyboard = function(event) {
+	
 	// call CGFinterface default code (omit if you want to override)
 	CGFinterface.prototype.processKeyboard.call(this,event);
 	
 	// Check key codes e.g. here: http://www.asciitable.com/
 	// or use String.fromCharCode(event.keyCode) to compare chars
-	
 	// for better cross-browser support, you may also check suggestions on using event.which in http://www.w3schools.com/jsref/event_key_keycode.asp
 	
 	if (event.keyCode == 68 || event.keyCode == 100) {
 		this.scene.drone.rotateLeft(this.scene.speed);
+		this.scene.drone.pitch();
+
 	}
 	else if (event.keyCode == 65 ||event.keyCode == 97){
 		this.scene.drone.rotateRight(this.scene.speed);
+		this.scene.drone.pitch();
 	} 
 	
 	else if (event.keyCode == 74 ||event.keyCode == 106){
@@ -82,13 +85,20 @@ MyInterface.prototype.processKeyboard = function(event) {
 
 	else if (event.keyCode == 73 ||event.keyCode == 105){
 		this.scene.drone.addHeight(this.scene.speed);
+
 	}
 
 	else if (event.keyCode == 78 ||event.keyCode == 119){
 		this.scene.drone.addMotion(this.scene.speed);
+		this.scene.drone.yaw();
 	}
 
 	else if (event.keyCode == 83 ||event.keyCode == 115){
 		this.scene.drone.redMotion(this.scene.speed);
+		this.scene.drone.yaw();
+
 	}
-};
+	
+		
+	
+	};

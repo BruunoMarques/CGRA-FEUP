@@ -25,6 +25,7 @@
 	this.vertices =[];
 	this.indices = [];
 	this.normals = [];
+	this.texCoords = [];
 
 
 	var angle = 2 * Math.PI / (this.slices);
@@ -37,27 +38,35 @@
 	for (var j = 0; j< this.stacks + 1; j++){
 		for (var i = 0; i < this.slices; i++){
 		this.normals.push(Math.cos(i * angle), Math.sin(i * angle),0);
-	}
+		}
 	}
 
 
-		for (var j = 0; j < this.stacks; j++){
-			for (var i = 0; i < this.slices; i++){
-				var avanco = j*this.slices;
-				var nextslice = (j+1)*this.slices;
-				if (this.slices -1 == i){
-					this.indices.push(avanco+i, avanco +i+1,nextslice+i);
-					this.indices.push(0,avanco+i+1,avanco+i);
-				//	this.indices.push(avanco, avanco +i+1, nextslice+i);
-				//this.indices.push(nextslice+2,nextslice-1,i*avanco);
-				}
-				else {
+	for (var j = 0; j < this.stacks; j++){
+		for (var i = 0; i < this.slices; i++){
+			var avanco = j*this.slices;
+			var nextslice = (j+1)*this.slices;
+
+			if (this.slices -1 == i){
+				this.indices.push(avanco+i, avanco +i+1,nextslice+i);
+				this.indices.push(0,avanco+i+1,avanco+i);
+			//	this.indices.push(avanco, avanco +i+1, nextslice+i);
+			//this.indices.push(nextslice+2,nextslice-1,i*avanco);
+			}
+			else {
 				this.indices.push(avanco+i, avanco +i+1, nextslice+i);
 				this.indices.push(nextslice+i, avanco+i+1, nextslice+i+1);
-				}
 			}
 		}
+	}
 	
+	for (var j = 0; j<= this.stacks; j++){
+		for (var i = 0; i < this.slices; i++){
+			this.texCoords.push(i/this.slices, j/this.stacks);
+		}
+	}
+
+
 //	this.indices.push(0,1,6);
 //	this.indices.push(6,1,7);
 
